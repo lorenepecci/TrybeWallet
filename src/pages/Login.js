@@ -14,7 +14,6 @@ class Login extends React.Component {
   }
 
   onInputChange = ({ target }) => {
-    console.log(target.value.length);
     this.setState({
       [target.name]: target.value,
     });
@@ -23,6 +22,10 @@ class Login extends React.Component {
   onClick = () => {
     const { email, password } = this.state;
     const { newUser, history } = this.props;
+    this.setState({
+      email,
+      password,
+    });
     newUser(email, password);
     history.push('/carteira');
   }

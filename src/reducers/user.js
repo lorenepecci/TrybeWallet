@@ -2,14 +2,8 @@
 import { NEW_USER } from '../actions';
 
 const initialState = {
-  user: {
-    email: '',
-    password: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  email: '',
+  password: '',
 };
 
 const user = (state = initialState, action) => {
@@ -17,10 +11,8 @@ const user = (state = initialState, action) => {
   case NEW_USER:
     return {
       ...state,
-      user: {
-        email: action.email,
-        password: action.password,
-      },
+      email: action.email,
+      password: action.password,
     };
   default:
     return { ...state };
