@@ -6,7 +6,7 @@ import Wallet from './pages/Wallet';
 class App extends React.Component {
   render() {
     return (
-      <div>
+      <div className="app-style">
         <h1>Hello, TrybeWallet!</h1>
         <Switch>
           <Route exact path="/" component={ Login } />
