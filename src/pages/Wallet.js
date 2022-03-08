@@ -10,12 +10,11 @@ class Wallet extends React.Component {
     this.state = {
       listaPagamento: ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'],
       listaTag: ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'],
-      value: 0,
+      value: '0',
       description: '',
       method: 'Dinheiro',
       currency: 'USD',
       tag: 'Alimentação',
-      codeIn: 'BRL',
     };
   }
 
@@ -30,14 +29,8 @@ class Wallet extends React.Component {
     });
   }
 
-  onInputChangeBRL = ({ target }) => {
-    this.setState({
-      codeIn: target.value,
-    });
-  }
-
   funcoesActionExpense = () => {
-    const { value, description, method, currency, tag, codeIn } = this.state;
+    const { value, description, method, currency, tag } = this.state;
     const { actionExpenses } = this.props;
     const objExpenses = {
       value, description, method, currency, tag,
@@ -56,12 +49,16 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencies, expenses, totalField} = this.props;
+    const { email, currencies, expenses } = this.props;
     const { value,
-      codeIn,
       description,
       listaPagamento,
-      listaTag } = this.state;
+      listaTag, currency } = this.state;
+
+    const calculateTotal = (acc, curr) => (
+      acc + (Number(curr.value) * curr.exchangeRates[curr.currency].ask)
+    );
+    const total = expenses.reduce(calculateTotal, 0);
     return (
       <div>
         <header className="wallet-header">
@@ -69,79 +66,74 @@ class Wallet extends React.Component {
             { `Email: ${email} `}
           </p>
           <p data-testid="total-field">
-            { `Despesa Total: R$ ${totalField}` }
+            {`Despesa Total: R$ ${total}` }
           </p>
-
-          <div data-testid="header-currency-field">
-            <label htmlFor="currencymine">
-              Moeda:
-              <select name="select" id="currencymine" onChange={ this.onInputChangeBRL }>
-                { currencies.map((item, index) => (
-                  <option
-                    data-testid={ `${item}` }
-                    key={ index }
-                    value={ item }
-                  >
-                    { item }
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-
+          <p data-testid="header-currency-field">BRL</p>
         </header>
 
         <form className="wallet-form">
-          <label htmlFor="value">
-            Valor:
-            <input
-              type="number"
-              id="value"
-              value={ value }
-              onChange={ this.onInputChange }
-            />
-          </label>
-          {/* SELECT */ }
-          <div data-testid="currency-input">
+          <div>
+            <label htmlFor="value">
+              Valor:
+              <input
+                data-testid="value-input"
+                type="text"
+                id="value"
+                value={ value }
+                onChange={ this.onInputChange }
+              />
+            </label>
+          </div>
+
+          <div >
             <label htmlFor="currency">
               Moeda:
-              <select name="select" id="currency" onChange={ this.onInputChange }>
+              <select
+                data-testid="currency-input"
+                name="select"
+                id="currency"
+                value={ currency }
+                onChange={ this.onInputChange }
+              >
                 { currencies.map((item, index) => (
                   <option key={ index } value={ item }>{item}</option>
                 ))}
               </select>
             </label>
           </div>
-          <div data-testid="method-input">
+          <div >
             <label htmlFor="method">
               Método Pagamento:
-              <select name="select" id="method" onChange={ this.onInputChange }>
+              <select data-testid="method-input" name="select" id="method" onChange={ this.onInputChange }>
                 { listaPagamento.map((item, index) => (
                   <option key={ index } value={ item }>{item}</option>
                 ))}
               </select>
             </label>
           </div>
-          <div data-testid="tag-input">
+          <div >
             <label htmlFor="tag">
               Tag:
-              <select name="select" id="tag" onChange={ this.onInputChange }>
+              <select data-testid="tag-input" name="select" id="tag" onChange={ this.onInputChange }>
                 { listaTag.map((item, index) => (
                   <option key={ index } value={ item }>{item}</option>
                 ))}
               </select>
             </label>
           </div>
-          {/* SELECT ACABA */}
-          <label htmlFor="description">
-            Descrição:
-            <input
-              type="text"
-              id="description"
-              value={ description }
-              onChange={ this.onInputChange }
-            />
-          </label>
+
+          <div>
+            <label htmlFor="description">
+              Descrição:
+              <input
+                data-testid="description-input"
+                type="text"
+                id="description"
+                value={ description }
+                onChange={ this.onInputChange }
+              />
+            </label>
+          </div>
           <button
             type="button"
             onClick={ this.onClick }
@@ -150,7 +142,7 @@ class Wallet extends React.Component {
           </button>
         </form>
         <div>
-          { (expenses) ? <WriteWallet codeIn={ codeIn } /> : null}
+          { (expenses) ? <WriteWallet /> : null }
         </div>
       </div>
     );
@@ -161,7 +153,7 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
-  totalField: state.wallet.totalValue,
+  objAPI: state.wallet.objAPI,
 });
 
 const mapDispatchToProps = (dispatch) => ({
