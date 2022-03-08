@@ -26,7 +26,7 @@ class WriteWallet extends React.Component {
   } */
 
   render() {
-    const { expenses, actionDeletee } = this.props;
+    const { expenses, actionDeletee, edit } = this.props;
     return (
       <div>
         <table className="table">
@@ -64,7 +64,7 @@ class WriteWallet extends React.Component {
                 </td>
                 <td>Real</td>
                 <td>
-                  <UpgradeTotalField itemID={ item.id } />
+                  <UpgradeTotalField itemID={ item.id } edit={ edit } />
                   <button
                     type="button"
                     data-testid="delete-btn"
@@ -94,6 +94,7 @@ const mapDispatchToProps = (dispatch) => ({
 WriteWallet.propTypes = {
   expenses: propTypes.arrayOf(propTypes.object).isRequired,
   actionDeletee: propTypes.func.isRequired,
+  edit: propTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WriteWallet);

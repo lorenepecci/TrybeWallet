@@ -1,7 +1,7 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 import {
   API_ERROR, API_SUCCESS,
-  DATA_DELETE, DATA_WALLET_EXPENSES,
+  DATA_DELETE, DATA_WALLET_EXPENSES, EDIT_DATA,
 } from '../actions';
 
 const initialStateWallet = {
@@ -23,6 +23,16 @@ const wallet = (state = initialStateWallet, action) => {
     return {
       ...state,
       expenses: state.expenses.filter((item) => item.id !== action.itemID),
+    };
+  case EDIT_DATA:
+    return {
+      ...state,
+      expenses: state.expenses.reduce((acc, expense) => {
+        if (expense.id === action.id) {
+          return [...acc, action.objEdit];
+        }
+        return [...acc, expense];
+      }, []),
     };
   case DATA_WALLET_EXPENSES:
     return {

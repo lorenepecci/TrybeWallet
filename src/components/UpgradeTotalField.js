@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 
 class UpgradeTotalField extends React.Component {
   onClick = () => {
+    const { edit } = this.props;
     const { itemID, expenses } = this.props;
     const finded = expenses.find((obj) => obj.id === itemID);
-    console.log(finded);
+    edit(finded);
   }
 
   render() {
@@ -31,7 +32,7 @@ const mapStateToProps = (state) => ({
 UpgradeTotalField.propTypes = {
   itemID: propTypes.number.isRequired,
   expenses: propTypes.arrayOf(propTypes.object).isRequired,
-
+  edit: propTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, null)(UpgradeTotalField);

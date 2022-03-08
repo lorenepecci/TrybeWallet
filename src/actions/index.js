@@ -4,6 +4,13 @@ export const API_SUCCESS = 'API_SUCCESS';
 export const API_ERROR = 'API_ERROR';
 export const DATA_WALLET_EXPENSES = 'DATA_WALLET_EXPENSES';
 export const DATA_DELETE = 'DATA_DELETE';
+export const EDIT_DATA = 'EDIT_DATA';
+
+export const actionEditData = (objEdit, id) => ({
+  type: EDIT_DATA,
+  objEdit,
+  id,
+});
 
 export const actionWalletData = (obj) => ({
   type: DATA_WALLET_EXPENSES,
