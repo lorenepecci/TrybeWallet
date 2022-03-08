@@ -15,7 +15,7 @@ class Wallet extends React.Component {
       method: 'Dinheiro',
       currency: 'USD',
       tag: 'Alimentação',
-      totalField: 0,
+      codeIn: 'BRL',
     };
   }
 
@@ -30,8 +30,14 @@ class Wallet extends React.Component {
     });
   }
 
+  onInputChangeBRL = ({ target }) => {
+    this.setState({
+      codeIn: target.value,
+    });
+  }
+
   funcoesActionExpense = () => {
-    const { value, description, method, currency, tag } = this.state;
+    const { value, description, method, currency, tag, codeIn } = this.state;
     const { actionExpenses } = this.props;
     const objExpenses = {
       value, description, method, currency, tag,
@@ -50,10 +56,10 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencies, expenses } = this.props;
+    const { email, currencies, expenses, totalField} = this.props;
     const { value,
+      codeIn,
       description,
-      totalField,
       listaPagamento,
       listaTag } = this.state;
     return (
@@ -65,7 +71,24 @@ class Wallet extends React.Component {
           <p data-testid="total-field">
             { `Despesa Total: R$ ${totalField}` }
           </p>
-          <p data-testid="header-currency-field">BRL</p>
+
+          <div data-testid="header-currency-field">
+            <label htmlFor="currencymine">
+              Moeda:
+              <select name="select" id="currencymine" onChange={ this.onInputChangeBRL }>
+                { currencies.map((item, index) => (
+                  <option
+                    data-testid={ `${item}` }
+                    key={ index }
+                    value={ item }
+                  >
+                    { item }
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+
         </header>
 
         <form className="wallet-form">
@@ -127,7 +150,7 @@ class Wallet extends React.Component {
           </button>
         </form>
         <div>
-          { (expenses) ? <WriteWallet /> : null}
+          { (expenses) ? <WriteWallet codeIn={ codeIn } /> : null}
         </div>
       </div>
     );
@@ -138,6 +161,7 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  totalField: state.wallet.totalValue,
 });
 
 const mapDispatchToProps = (dispatch) => ({
