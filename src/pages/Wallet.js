@@ -2,6 +2,7 @@ import propTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { actionEditData, actionWalletData, fetchAPI } from '../actions';
+import Header from '../components/Header';
 import WriteWallet from '../components/WriteWallet';
 
 class Wallet extends React.Component {
@@ -15,7 +16,8 @@ class Wallet extends React.Component {
       method: 'Dinheiro',
       currency: 'USD',
       tag: 'Lazer',
-      objexpenses: {},
+      btnTitle: 'Adicionar despesa',
+      isEdit: false,
     };
   }
 
@@ -30,18 +32,53 @@ class Wallet extends React.Component {
     });
   }
 
-  onClickEdit = (obj) => {
-    const { actionEdit, actionExpenses, objAPI } = this.props;
-    const { objexpenses } = this.state;
+  onClick = () => {
+    const { isEdit } = this.state;
+    if (isEdit) {
+      this.onClickEdit();
+    } else {
+      this.addExpense();
+    }
+  }
 
-    const objDoEdit = {
+  btnEdit = (obj) => {
+    this.setState(() => ({
+      value: obj.value,
+      description: obj.description,
+      currency: obj.currency,
+      method: obj.method,
+      tag: obj.tag,
+      btnTitle: 'Editar despesa',
+      exchangeRates: obj.exchangeRates,
+      isEdit: true,
       id: obj.id,
-      objexpenses,
-      exchangeRates: objAPI,
+    }));
+  }
+
+  onClickEdit = () => {
+    const { actionEdit } = this.props;
+    const {
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates,
+      id,
+    } = this.state;
+    const objDoEdit = {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates,
     };
-    console.log(obj);
-    actionExpenses(objDoEdit);
-    actionEdit(objDoEdit, obj.id);
+    actionEdit(objDoEdit, id);
+    this.setState(() => (
+      { value: '', description: '', btnTitle: 'Adicionar despesa', isEdit: false }
+    ));
   }
 
   funcoesActionExpense = () => {
@@ -52,12 +89,12 @@ class Wallet extends React.Component {
     };
 
     this.setState({
-      objexpenses: objExpenses,
+      ...objExpenses,
     });
     actionExpenses(objExpenses);
   }
 
-  onClick = () => {
+  addExpense = () => {
     const { buscaAPI } = this.props;
     buscaAPI();
     this.funcoesActionExpense();
@@ -68,27 +105,16 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currencies, expenses } = this.props;
+    const { currencies } = this.props;
     const { value,
       description,
       listaPagamento,
+      btnTitle,
       listaTag, currency } = this.state;
 
-    const total = expenses.reduce((acc, item) => (
-      acc + (item.value * item.exchangeRates[item.currency].ask)
-    ), 0);
     return (
       <div>
-        <header className="wallet-header">
-          <p data-testid="email-field">
-            { `Email: ${email} `}
-          </p>
-          <p data-testid="total-field">
-            {`Despesa Total: R$ ${total}` }
-          </p>
-          <p data-testid="header-currency-field">BRL</p>
-        </header>
-
+        <Header />
         <form className="wallet-form">
           <div>
             <label htmlFor="value">
@@ -166,11 +192,11 @@ class Wallet extends React.Component {
             type="button"
             onClick={ this.onClick }
           >
-            Adicionar despesa
+            {btnTitle}
           </button>
         </form>
         <div>
-          { (expenses) ? <WriteWallet edit={ this.onClickEdit } /> : null }
+          <WriteWallet edit={ this.btnEdit } />
         </div>
       </div>
     );
@@ -191,13 +217,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Wallet.propTypes = {
-  email: propTypes.string.isRequired,
   buscaAPI: propTypes.func.isRequired,
   actionEdit: propTypes.func.isRequired,
   actionExpenses: propTypes.func.isRequired,
   currencies: propTypes.arrayOf(propTypes.string).isRequired,
-  expenses: propTypes.arrayOf(propTypes.object).isRequired,
-  objAPI: propTypes.objectOf(propTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

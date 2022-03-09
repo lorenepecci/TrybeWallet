@@ -2,7 +2,6 @@ import propTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { actionDelete } from '../actions';
-import UpgradeTotalField from './UpgradeTotalField';
 
 class WriteWallet extends React.Component {
   /* counter = (item) => {
@@ -64,7 +63,14 @@ class WriteWallet extends React.Component {
                 </td>
                 <td>Real</td>
                 <td>
-                  <UpgradeTotalField itemID={ item.id } edit={ edit } />
+                  <button
+                    data-testid="edit-btn"
+                    type="button"
+                    onClick={ () => edit(item) }
+                  >
+                    Editar
+                  </button>
+
                   <button
                     type="button"
                     data-testid="delete-btn"
