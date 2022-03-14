@@ -9,6 +9,10 @@ class WriteWallet extends React.Component {
       objAPI,
       currencies } = this.props;
 
+      const objConversionCurrency = {
+        [currencies] : [listASKs]
+      }
+
     // ['USD', 'EUR']
     // ['5.15','5.57']
     const listASK = Object.values(objAPI);
@@ -56,10 +60,10 @@ class WriteWallet extends React.Component {
                   { item.exchangeRates[`${item.currency}`].name.split('/')[0] }
                 </td>
                 <td>
-                  { Math.round(item.exchangeRates[`${item.currency}`].ask * 100) / 100}
+                  { (Math.round(item.exchangeRates[`${item.currency}`].ask * 100) / 100).toFixed(2)}
                 </td>
                 <td>
-                  { item.exchangeRates[`${item.currency}`].ask * item.value}
+                  { (item.exchangeRates[`${item.currency}`].ask * item.value).toFixed(2)}
                 </td>
                 <td>Real</td>
                 <td>
@@ -84,6 +88,7 @@ class WriteWallet extends React.Component {
             )) }
           </tbody>
         </table>
+        {/* < Counter /> */}
       </div>
     );
   }

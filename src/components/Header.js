@@ -11,7 +11,7 @@ class Header extends Component {
     return (
       <header className="wallet-header">
         <p data-testid="email-field">{ `Email: ${email} `}</p>
-        <p data-testid="total-field">{`Despesa Total: R$ ${total}` }</p>
+        <p data-testid="total-field">{`Despesa Total: R$ ${total.toFixed(2)}` }</p>
         <p data-testid="header-currency-field">BRL</p>
       </header>
     );

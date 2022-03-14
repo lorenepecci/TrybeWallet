@@ -24,11 +24,31 @@ code {
   text-align: center;
 }
 
+.wallet-header {
+  padding-right: 30px;
+}
+
+.login {
+  justify-content: center;
+  margin: 10%;
+}
+
+.login h1 {
+  display: block;
+  text-align: center;
+}
+
+.login form {
+  display: block;
+  text-align: center;
+}
+
 .wallet-form {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: whitesmoke;
+  height: 60px;
 }
 
 .table {
@@ -36,4 +56,3 @@ code {
   width: 90%;
   text-align: center;
 }
-

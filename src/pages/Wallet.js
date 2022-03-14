@@ -87,9 +87,10 @@ class Wallet extends React.Component {
     const objExpenses = {
       value, description, method, currency, tag,
     };
-
     this.setState({
       ...objExpenses,
+      description: '',
+      value: 0,
     });
     actionExpenses(objExpenses);
   }
@@ -98,10 +99,6 @@ class Wallet extends React.Component {
     const { buscaAPI } = this.props;
     buscaAPI();
     this.funcoesActionExpense();
-    this.setState({
-      description: '',
-      value: 0,
-    });
   }
 
   render() {
