@@ -60,7 +60,8 @@ class WriteWallet extends React.Component {
                   { item.exchangeRates[`${item.currency}`].name.split('/')[0] }
                 </td>
                 <td>
-                  { (Math.round(item.exchangeRates[`${item.currency}`].ask * 100) / 100).toFixed(2)}
+                  { (Math.round(item.exchangeRates[`${item.currency}`].ask * 100) / 100)
+                    .toFixed(2) }
                 </td>
                 <td>
                   { (item.exchangeRates[`${item.currency}`].ask * item.value).toFixed(2)}
