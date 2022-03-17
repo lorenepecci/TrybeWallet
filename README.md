@@ -1,10 +1,12 @@
+
+#Conversor de Moedas
 ## Este projeto é o desenvolvimento de uma aplicação em React que usou Redux como ferramenta de manipulação de estado.
 
 Se trata de um aplicação de conversão de moedas utilizando a API.
 
 Veja a [documentação da API](https://docs.awesomeapi.com.br/api-de-moedas).
 
-# Habilidades
+## Habilidades
 
 - Criar um store Redux em aplicações React
 
