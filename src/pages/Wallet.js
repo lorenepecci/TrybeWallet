@@ -96,8 +96,8 @@ class Wallet extends React.Component {
   }
 
   addExpense = () => {
-    const { buscaAPI } = this.props;
-    buscaAPI();
+   /*  const { buscaAPI } = this.props;
+    buscaAPI(); */
     this.funcoesActionExpense();
   }
 
