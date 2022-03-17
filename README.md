@@ -1,6 +1,6 @@
 ## Este projeto é o desenvolvimento de uma aplicação em React que usou Redux como ferramenta de manipulação de estado.
 
-# Se trata de um aplicação de conversão de moedas utilizando a API <https://economia.awesomeapi.com.br/json/all>
+Se trata de um aplicação de conversão de moedas utilizando a API <https://economia.awesomeapi.com.br/json/all>
 
 Veja a [documentação](https://docs.awesomeapi.com.br/api-de-moedas).
 
@@ -18,7 +18,7 @@ Veja a [documentação](https://docs.awesomeapi.com.br/api-de-moedas).
 
 - Criar actions assíncronas na sua aplicação React que faz uso de Redux.
 
-## Antes de começar a desenvolver
+## Instruções para a visualização: 
 
 1. Clone o repositório
 
