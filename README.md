@@ -18,17 +18,16 @@ Veja a [documentação](https://docs.awesomeapi.com.br/api-de-moedas).
 
 - Criar actions assíncronas na sua aplicação React que faz uso de Redux.
 
-## Antes de começar a desenvolver
+## Instruções de visualização do projeto
 
 1. Clone o repositório
 
 - `git clone git@github.com:lorenepecci/TrybeWallet.git`
-- Entre na pasta do repositório que você acabou de clonar:
-  - `cd sd-0x-project-trybewallet`
+- Entre na pasta do repositório que você acabou de clonar
 
 2. Instale as dependências e inicialize o projeto
 
 - Instale as dependências:
   - `npm install`
 - Inicialize o projeto:
-  - `npm start` (uma nova página deve abrir no seu navegador com um texto simples)
+  - `npm start` (uma nova página deve abrir no seu navegador)
